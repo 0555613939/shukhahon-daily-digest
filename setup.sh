@@ -1,17 +1,16 @@
 #!/bin/bash
 # שמור כ-setup.sh ותריץ: chmod +x setup.sh && ./setup.sh
 
-# צור את הפרויקט
+# צור את התיקיות
 mkdir -p shukhahon-daily-digest/{scripts,venv}
 cd shukhahon-daily-digest
 
-# יצירת ה-environments
+# סביבת ה-Environment (הדבק כאן את 4 הערכים מה-Keys and tokens)
 cat > .env << EOF
-GITHUB_TOKEN=הדבק כאן_TOKEN_שלך
-TWITTER_BEARER_TOKEN=הדבק כאן_Bearer_Token_שלך
-TWITTER_CLIENT_ID=הדבק כאן_Client_ID
-TWITTER_CLIENT_SECRET=הדבק כאן_Client_Secret
-TARGET_ACCOUNTS=eWhispers,RyanDetrick,charliebilello,KobeissiLetter,MikeZaccardi,LizAnnSonders,KevRGordon,NickTimiraos,EricBalchunas,DanielTNiles,jimcramer,StockMKTNewz,AIStockSavvy,DeItaone,LiveSquawk,wallstengine
+GITHUB_TOKEN=הדבק כאן_GITHUB_TOKEN_שלך
+TWITTER_BEARER_TOKEN=הדבק כאן_TWITTER_BEARER_TOKEN_שלך
+TWITTER_CLIENT_ID=הדבק כאן_TWITTER_CLIENT_ID_שלך
+TWITTER_CLIENT_SECRET=הדבק כאן_TWITTER_CLIENT_SECRET_שלך
 EOF
 
 # Git ignore
@@ -26,11 +25,10 @@ EOF
 cat > requirements.txt << EOF
 python-dotenv
 requests
-python-dotenv
 EOF
 
-# תוכנית Python ראשית (הכלי עצמו)
-cat > scripts/main.py << 'EOF'
+# תוכנית Python ראשית (הכלי)
+cat > scripts/main.py << 'PYEOF'
 import requests
 import os
 import json
@@ -39,10 +37,11 @@ from datetime import datetime, timedelta
 
 load_dotenv()
 
-ACCOUNTS = os.getenv('TARGET_ACCOUNTS').split(',')
+# 16 הערוצים שאתה עוקב אחריהם
+ACCOUNTS = ["eWhispers", "RyanDetrick", "charliebilello", "KobeissiLetter", "MikeZaccardi", "LizAnnSonders", "KevRGordon", "NickTimiraos", "EricBalchunas", "DanielTNiles", "jimcramer", "StockMKTNewz", "AIStockSavvy", "DeItaone", "LiveSquawk", "wallstengine"]
 BEARER = os.getenv('TWITTER_BEARER_TOKEN')
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
-REPO = "ShukHahonDailyDailyDigest/shukhahon-daily-digest"  # שנה לשם שלך
+REPO = "ShukHahonDailyDailyDigest/shukhahon-daily-digest"   # שנה לשם שלך
 FILE_NAME = "summary.md"
 
 def fetch_posts():
@@ -59,9 +58,9 @@ def fetch_posts():
 
 def summarize(posts):
     summary = f"# שוק ההון – סיכום יומי {datetime.now().strftime('%d.%m.%Y')}\n\n"
-    for post in posts[:30]:  # 30 הפוסטים הכי חשובים
-        summary += f"**@{post['author'] or post.get('author', 'Unknown')}**\n"
-        summary += f"{post['text'][:300]}...\n\n"
+    for post in posts[:30]:  # 30 הפוסטים הכי רלוונטיים
+        summary += f"**@{post.get('author', 'Unknown')}**\n"
+        summary += f"{post.get('text', '')[:350]}...\n\n"
     return summary
 
 posts = fetch_posts()
@@ -71,21 +70,21 @@ summary_text = summarize(posts)
 with open(FILE_NAME, 'w', encoding='utf-8') as f:
     f.write(summary_text)
 
-# פוסט אוטומטי
+# פוסט אוטומטי ל-X
 post_url = "https://api.x.com/2/tweets"
 post_headers = {"Authorization": f"Bearer {BEARER}", "Content-Type": "application/json"}
 post_data = {"text": f"סיכום יומי מלא של @ShukHahonDaily – כל 16 הערוצים! 👉 {summary_text[:200]}... {REPO}/blob/main/{FILE_NAME}"}
 requests.post(post_url, headers=post_headers, json=post_data)
 
-print("✅ סיכום מוכן + פוסט!")
-EOF
+print("✅ סיכום מוכן + פוסט אוטומטי!")
+PYEOF
 
 # GitHub Actions (אוטומטי יומי)
-cat > .github/workflows/daily-digest.yml << 'EOF'
+cat > .github/workflows/daily-digest.yml << 'WORKEOF'
 name: Daily ShukHahon Digest
 on:
   schedule:
-    - cron: '0 8 * * 1-5'  # כל יום חול 8:00 UTC (8:00 בבוקר ישראל)
+    - cron: '0 8 * * 1-5'  # 8:00 בבוקר ישראל
   workflow_dispatch:
 
 jobs:
@@ -108,11 +107,12 @@ jobs:
           git add .
           git commit -m "Daily digest $(date +%Y-%m-%d)" || echo "No changes"
           git push
-EOF
+WORKEOF
 
-# הגדרת GitHub secrets (חשוב!)
-echo "סיימת! עכשיו הוסף ל-GitHub Settings > Secrets and variables > Actions:"
-echo "1. GITHUB_TOKEN (שלך)"
-echo "2. TWITTER_BEARER_TOKEN (שלך)"
-echo "3. TWITTER_CLIENT_ID (שלך)"
-echo "4. TWITTER_CLIENT_SECRET (שלך)"
+echo "✅ הכלי מלא! עכשיו:"
+echo "1. הוסף את 4 הטוקנים ל-env"
+echo "2. שמור את הקובץ"
+echo "3. תחזור לגיטהאב ותלחץ Commit & push"
+echo "4. הוסף את 4 הטוקנים ל-GitHub Secrets"
+echo "5. תלחץ Run workflow"
+echo "הכלי ירוץ אוטומטית כל יום!"
