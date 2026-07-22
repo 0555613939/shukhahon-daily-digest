@@ -41,7 +41,7 @@ load_dotenv()
 ACCOUNTS = ["eWhispers", "RyanDetrick", "charliebilello", "KobeissiLetter", "MikeZaccardi", "LizAnnSonders", "KevRGordon", "NickTimiraos", "EricBalchunas", "DanielTNiles", "jimcramer", "StockMKTNewz", "AIStockSavvy", "DeItaone", "LiveSquawk", "wallstengine"]
 BEARER = os.getenv('TWITTER_BEARER_TOKEN')
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
-REPO = "ShukHahonDailyDailyDigest/shukhahon-daily-digest"   # שנה לשם שלך
+REPO = "ShukHahonDailyDailyDigest/shukhahon-daily-digest/YdydyhZwmr3130"שנה לשם שלך
 FILE_NAME = "summary.md"
 
 def fetch_posts():
