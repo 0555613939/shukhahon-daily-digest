@@ -5,7 +5,7 @@
 mkdir -p shukhahon-daily-digest/{scripts,venv}
 cd shukhahon-daily-digest
 
-# סביבת ה-Environment (הדבק כאן את 4 הערכים מה-Keys and tokens)
+# סביבת ה-Environment – הדבק כאן את 4 הערכים מה-Keys and tokens
 cat > .env << EOF
 GITHUB_TOKEN=הדבק כאן_GITHUB_TOKEN_שלך
 TWITTER_BEARER_TOKEN=הדבק כאן_TWITTER_BEARER_TOKEN_שלך
@@ -27,7 +27,7 @@ python-dotenv
 requests
 EOF
 
-# תוכנית Python ראשית (הכלי)
+# תוכנית Python ראשית (הכלי המלא)
 cat > scripts/main.py << 'PYEOF'
 import requests
 import os
@@ -112,7 +112,7 @@ WORKEOF
 echo "✅ הכלי מלא! עכשיו:"
 echo "1. הוסף את 4 הטוקנים ל-env"
 echo "2. שמור את הקובץ"
-echo "3. תחזור לגיטהאב ותלחץ Commit & push"
+echo "3. תחזור ל-GitHub ותלחץ Commit & push"
 echo "4. הוסף את 4 הטוקנים ל-GitHub Secrets"
 echo "5. תלחץ Run workflow"
-echo "הכלי ירוץ אוטומטית כל יום!"
+echo "הכלי ירוץ אוטומטית כל יום 8:00 בבוקר ישראל!"
