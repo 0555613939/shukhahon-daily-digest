@@ -8,9 +8,9 @@ cd shukhahon-daily-digest
 # סביבת ה-Environment – הדבק כאן את 4 הערכים מה-Keys and tokens
 cat > .env << EOF
 GITHUB_TOKEN=הדבק כאן_GITHUB_TOKEN_שלך
-TWITTER_BEARER_TOKEN=הדבק כאן_TWITTER_BEARER_TOKEN_שלך
-TWITTER_CLIENT_ID=הדבק כאן_TWITTER_CLIENT_ID_שלך
-TWITTER_CLIENT_SECRET=הדבק כאן_TWITTER_CLIENT_SECRET_שלך
+TWITTER_BEARER_TOKEN=7mz xJnoXd v5b TU71 X3 w2 Wf i tM
+TWITTER_CLIENT_ID=7mz xJnoXd v5b TU71 X3 w2 Wf i tM
+TWITTER_CLIENT_SECRET=JIs j q1q a TWm1 bdp LY R L TS1s 7p Jn F Bee8 7k VA v0 R Cg x Lg 7 r47 w
 EOF
 
 # Git ignore
@@ -41,7 +41,7 @@ load_dotenv()
 ACCOUNTS = ["eWhispers", "RyanDetrick", "charliebilello", "KobeissiLetter", "MikeZaccardi", "LizAnnSonders", "KevRGordon", "NickTimiraos", "EricBalchunas", "DanielTNiles", "jimcramer", "StockMKTNewz", "AIStockSavvy", "DeItaone", "LiveSquawk", "wallstengine"]
 BEARER = os.getenv('TWITTER_BEARER_TOKEN')
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
-REPO = "ShukHahonDailyDailyDigest/shukhahon-daily-digest/YdydyhZwmr3130"שנה לשם שלך
+REPO = "ShukHahonDailyDailyDigest/shukhahon-daily-digest"   # שנה לשם שלך
 FILE_NAME = "summary.md"
 
 def fetch_posts():
